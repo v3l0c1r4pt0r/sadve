@@ -29,101 +29,88 @@
 
 #define LONG_OPTION (( CHAR_MAX + 1 ))
 
-int internal(int a, int b)
+typedef enum {
+  MODE_UNDEFINED = 0,
+  MODE_DEFINE,
+  MODE_SIZEOF,
+  MODE_USAGE,
+  MODE_HELP,
+} mode_t;
+
+void help(int argc, char **argv, int usage)
 {
-  return a * b;
+  printf("Usage: %s -d|-s SYMBOL INCLUDE | -h\n", argv[0]);
+  if (!usage)
+  {
+    printf("\n"
+        "\t-d, --define  Print final value of preprocessor macro\n"
+        "\t-s, --sizeof  Print total length of type/struct\n"
+        "\t-h, --help    Print this help message and exit\n"
+        "\tINCLUDE       Header where symbol is defined\n"
+        "\tSYMBOL        Symbol which value is to be examined\n"
+        "\n");
+  }
 }
 
 int main(int argc, char **argv)
 {
   int c;
   int digit_optind = 0;
-
-  int one = 10;
-  int two = 2;
-  int result = internal(one, two);
-  result += external(result);
-  printf("%d\n", result);
+  mode_t mode = MODE_UNDEFINED;
 
   while (1) {
     int this_option_optind = optind ? optind : 1;
     int option_index = 0;
     static struct option long_options[] = {
       /* {name, has_arg, flag, val} */
-      {"option", required_argument, 0, 'o' },
-      {"switch", no_argument, 0, 's' },
-      {"dual", optional_argument, 0, 'd' },
-      {"long", no_argument, 0, LONG_OPTION },
+      {"define", no_argument, 0, 'd' },
+      {"sizeof", no_argument, 0, 's' },
+      {"help", no_argument, 0, 'h' },
       {0, 0, 0, 0 }
     };
 
-    c = getopt_long(argc, argv, "o:sd::",
+    c = getopt_long(argc, argv, "dsh",
         long_options, &option_index);
     if (c == -1)
       break;
 
     switch (c) {
-      case 0:
-        /* for default long options
-         * (option->flag==0 -> 4th element of struct option) */
-        printf("option %s", long_options[option_index].name);
-        if (optarg)
-          printf(" with arg %s", optarg);
-        printf("\n");
-        break;
-
-      case '0':
-      case '1':
-      case '2':
-        if (digit_optind != 0 && digit_optind != this_option_optind)
-          printf("digits occur in two different argv-elements.\n");
-        digit_optind = this_option_optind;
-        printf("option %c\n", c);
-        break;
-
-      case 'o':
-        /* --option=VAL */
-        printf("option with value '%s'\n", optarg);
+      case 'd':
+        mode = MODE_DEFINE;
         break;
 
       case 's':
-        /* --switch */
-        printf("switch\n");
+        mode = MODE_SIZEOF;
         break;
 
-      case 'd':
-        /* --dual[=VAL] */
-        if (optarg == NULL)
-        {
-        printf("dual without value\n");
-        }
-        else
-        {
-        printf("dual with value '%s'\n", optarg);
-        }
-        break;
-
-      case LONG_OPTION:
-        /* --long */
-        printf("long option\n");
-        break;
-
-      case '?':
-        /* -* not in optstring */
+      case 'h':
+        mode = MODE_HELP;
         break;
 
       default:
         /* optstrings not handled (mistakes?) */
-        printf("?? getopt returned character code 0%o ??\n", c);
+        printf("error when parsing options (%c returned)\n", c);
+        return 1;
     }
   }
 
   /* positional arguments */
-  if (optind < argc) {
-      printf("non-option ARGV-elements: ");
-      while (optind < argc)
-    printf("%s ", argv[optind++]);
-      printf("\n");
+  if ((mode != MODE_HELP) && (mode != MODE_USAGE))
+  {
+    if ((argc - optind) == 2)
+    {
+      printf("%s %s\n", argv[optind], argv[optind+1]);
+    }
+    else
+    {
+      mode = MODE_USAGE;
+    }
+  }
+
+  if ((mode == MODE_HELP) || (mode == MODE_USAGE))
+  {
+    help(argc, argv, mode == MODE_USAGE);
+    return 0;
   }
 
   return 0;
