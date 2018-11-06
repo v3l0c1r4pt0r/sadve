@@ -20,4 +20,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-add_executable(program program.c module.c)
+add_executable(sadve sadve.c module.c)
