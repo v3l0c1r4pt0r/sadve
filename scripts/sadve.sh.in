@@ -69,18 +69,38 @@ EOF
   esac
 done
 
+INCLUDE="$2"
+SYMBOL="$1"
+
+# prepare vars to fill template
+case $MODE in
+  define)
+    export OUTPUT_INCLUDE="$INCLUDE"
+    export OUTPUT_SYMBOL="$SYMBOL"
+    export OUTPUT_COMMAND="$SYMBOL"
+    export OUTPUT_TYPE="$TYPE"
+    OUTPUT_MODE="define"
+    ;;
+  sizeof)
+    export OUTPUT_INCLUDE="$INCLUDE"
+    export OUTPUT_SYMBOL="$SYMBOL"
+    export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
+    export OUTPUT_TYPE="$TYPE"
+    OUTPUT_MODE="define"
+    ;;
+  *)
+    echo 'Internal error!'
+    exit 1;
+    ;;
+esac
+
 # save script location and generate build directory (if not exists)
-SCRIPT_DIR="${CMAKE_INSTALL_FULL_DATAROOTDIR}/${PROJECT_NAME}/$MODE"
+SCRIPT_DIR="${CMAKE_INSTALL_FULL_DATAROOTDIR}/${PROJECT_NAME}/$OUTPUT_MODE"
 BUILD_DIR="$HOME/.cache/sadve/$MODE"
 
 # out-of-source build
 mkdir -p $BUILD_DIR
 cd $BUILD_DIR
-
-# prepare vars to fill template
-export OUTPUT_INCLUDE="$2"
-export OUTPUT_SYMBOL="$1"
-export OUTPUT_TYPE="$TYPE"
 
 # build
 cmake $SCRIPT_DIR >>$BUILD_DIR/user.log

@@ -3,6 +3,6 @@
 
 int main(int argc, char **argv)
 {
-  printf("%${OUTPUT_TYPE}\n", ${OUTPUT_SYMBOL});
+  printf("%${OUTPUT_TYPE}\n", ${OUTPUT_COMMAND});
   return 0;
 }
