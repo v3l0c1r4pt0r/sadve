@@ -1,0 +1,8 @@
+#include <stdio.h>
+#include <${OUTPUT_INCLUDE}>
+
+int main(int argc, char **argv)
+{
+  printf("%${OUTPUT_TYPE}\n", ${OUTPUT_SYMBOL});
+  return 0;
+}

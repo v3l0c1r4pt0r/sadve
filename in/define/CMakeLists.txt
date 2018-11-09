@@ -1,0 +1,16 @@
+cmake_minimum_required (VERSION 3.0)
+project (define)
+
+set(OUTPUT_INCLUDE $ENV{OUTPUT_INCLUDE})
+set(OUTPUT_SYMBOL $ENV{OUTPUT_SYMBOL})
+set(OUTPUT_TYPE $ENV{OUTPUT_TYPE})
+
+if (NOT DEFINED OUTPUT_INCLUDE OR
+    NOT DEFINED OUTPUT_SYMBOL OR
+    NOT DEFINED OUTPUT_TYPE)
+  message(FATAL_ERROR "At least one of OUTPUT_INCLUDE, OUTPUT_SYMBOL or OUTPUT_TYPE variable not defined. Stopping.")
+endif()
+
+configure_file(define.c.in ${CMAKE_BINARY_DIR}/define.c)
+add_executable(define_${OUTPUT_SYMBOL} ${CMAKE_BINARY_DIR}/define.c)
+add_custom_target(run COMMAND echo BEGIN && ${CMAKE_BINARY_DIR}/define_${OUTPUT_SYMBOL} && echo END)
