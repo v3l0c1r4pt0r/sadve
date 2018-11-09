@@ -22,4 +22,3 @@
 
 cmake_minimum_required (VERSION 3.0)
 project (cmocka_template)
-add_subdirectory(src)
