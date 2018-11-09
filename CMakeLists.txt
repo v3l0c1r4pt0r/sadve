@@ -22,4 +22,5 @@
 
 cmake_minimum_required (VERSION 3.0)
 project (sadve)
+include (GNUInstallDirs)
 add_subdirectory(scripts)
