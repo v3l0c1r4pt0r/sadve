@@ -91,3 +91,4 @@ make run | awk '/BEGIN/{flag=1;next}/END/{flag=0}flag'
 
 # cleanup
 cd - &>/dev/null
+find $HOME/.cache/sadve -name *define_${OUTPUT_SYMBOL}* -exec rm -fr {} \; &>/dev/null || true
