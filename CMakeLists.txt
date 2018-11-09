@@ -21,5 +21,5 @@
 # SOFTWARE.
 
 cmake_minimum_required (VERSION 3.0)
-project (cmocka_template)
+project (sadve)
 add_subdirectory(scripts)
