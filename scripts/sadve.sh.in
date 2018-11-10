@@ -8,7 +8,7 @@ PROGNAME="$0"
 FORMAT="d"
 
 # parse options
-TEMP=$(getopt -o 'f:dsh' --long 'dec,hex,format:,define,sizeof,help' -n "$0" -- "$@")
+TEMP=$(getopt -o 'f:dsth' --long 'dec,hex,format:,define,sizeof,type,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -43,11 +43,17 @@ while true; do
       shift
       continue
       ;;
+    '-t'|'--type')
+      MODE="type"
+      shift
+      continue
+      ;;
     '-h'|'--help')
       cat <<EOF
 Usage: $PROGNAME -d|-s SYMBOL HEADER | -h
         -d, --define  Print final value of preprocessor macro
-        -s, --sizeof  Print total length of type/struct
+        -s, --sizeof  Print total length of struct
+        -t, --type    Print total length of type
             --dec     Print value in decimal form (default)
             --hex     Print value in hexadecimal form
             --type=T  Print value in T form, where T is format string as in
@@ -85,6 +91,13 @@ case $MODE in
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
+    export OUTPUT_TYPE="$FORMAT"
+    OUTPUT_MODE="simple"
+    ;;
+  type)
+    export OUTPUT_INCLUDE="$INCLUDE"
+    export OUTPUT_SYMBOL="$SYMBOL"
+    export OUTPUT_COMMAND="sizeof($SYMBOL)"
     export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
