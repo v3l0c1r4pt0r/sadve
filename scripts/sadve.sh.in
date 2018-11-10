@@ -119,7 +119,8 @@ case $MODE in
     OUTPUT_MODE="simple"
     ;;
   *)
-    echo 'Internal error!'
+    echo 'No mode was chosen. Use one of -dsute.'
+    show_help "usage";
     exit 1;
     ;;
 esac
