@@ -39,22 +39,26 @@ while true; do
       continue
       ;;
     '-s'|'--struct')
-      MODE="struct"
+      MODE="sizeof"
+      KEYWORD="struct"
       shift
       continue
       ;;
     '-u'|'--union')
-      MODE="union"
+      MODE="sizeof"
+      KEYWORD="union"
       shift
       continue
       ;;
     '-t'|'--type')
-      MODE="type"
+      MODE="sizeof"
+      KEYWORD=""
       shift
       continue
       ;;
     '-e'|'--enum')
-      MODE="enum"
+      MODE="sizeof"
+      KEYWORD="enum"
       shift
       continue
       ;;
@@ -99,31 +103,10 @@ case $MODE in
     export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
-  struct)
+  sizeof)
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
-    export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
-    export OUTPUT_TYPE="$FORMAT"
-    OUTPUT_MODE="simple"
-    ;;
-  union)
-    export OUTPUT_INCLUDE="$INCLUDE"
-    export OUTPUT_SYMBOL="$SYMBOL"
-    export OUTPUT_COMMAND="sizeof(union $SYMBOL)"
-    export OUTPUT_TYPE="$FORMAT"
-    OUTPUT_MODE="simple"
-    ;;
-  type)
-    export OUTPUT_INCLUDE="$INCLUDE"
-    export OUTPUT_SYMBOL="$SYMBOL"
-    export OUTPUT_COMMAND="sizeof($SYMBOL)"
-    export OUTPUT_TYPE="$FORMAT"
-    OUTPUT_MODE="simple"
-    ;;
-  enum)
-    export OUTPUT_INCLUDE="$INCLUDE"
-    export OUTPUT_SYMBOL="$SYMBOL"
-    export OUTPUT_COMMAND="sizeof(enum $SYMBOL)"
+    export OUTPUT_COMMAND="sizeof($KEYWORD $SYMBOL)"
     export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
