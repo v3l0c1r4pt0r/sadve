@@ -79,14 +79,14 @@ case $MODE in
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="$SYMBOL"
     export OUTPUT_TYPE="$TYPE"
-    OUTPUT_MODE="define"
+    OUTPUT_MODE="simple"
     ;;
   sizeof)
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
     export OUTPUT_TYPE="$TYPE"
-    OUTPUT_MODE="define"
+    OUTPUT_MODE="simple"
     ;;
   *)
     echo 'Internal error!'
@@ -96,7 +96,7 @@ esac
 
 # save script location and generate build directory (if not exists)
 SCRIPT_DIR="${CMAKE_INSTALL_FULL_DATAROOTDIR}/${PROJECT_NAME}/$OUTPUT_MODE"
-BUILD_DIR="$HOME/.cache/sadve/$MODE"
+BUILD_DIR="$HOME/.cache/sadve/$OUTPUT_MODE"
 
 # out-of-source build
 mkdir -p $BUILD_DIR
@@ -111,4 +111,4 @@ make run | awk '/BEGIN/{flag=1;next}/END/{flag=0}flag'
 
 # cleanup
 cd - &>/dev/null
-find $HOME/.cache/sadve -name *define_${OUTPUT_SYMBOL}* -exec rm -fr {} \; &>/dev/null || true
+find $HOME/.cache/sadve -name *simple_${OUTPUT_SYMBOL}* -exec rm -fr {} \; &>/dev/null || true
