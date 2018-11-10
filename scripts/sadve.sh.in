@@ -7,6 +7,29 @@ set -e
 PROGNAME="$0"
 FORMAT="d"
 
+function show_help {
+  cat <<EOF
+Usage: $PROGNAME [--dec|--hex|--type=T] -d|-s|-u|-t|-e SYMBOL HEADER | -h
+EOF
+  if [ "z$1" != "zusage" ]; then
+      cat <<EOF
+        -d, --define  Print final value of preprocessor macro
+        -s, --struct  Print total length of struct
+        -u, --union   Print total length of union
+        -t, --type    Print total length of type
+        -e, --enum    Print total length of enum
+            --dec     Print value in decimal form (default)
+            --hex     Print value in hexadecimal form
+            --type=T  Print value in T form, where T is format string as in
+                      printf(3)
+        -h, --help    Print this help message and exit
+        SYMBOL        Symbol which value is to be examined
+        HEADER        Header where symbol is defined
+EOF
+  fi
+  exit 0
+}
+
 # parse options
 TEMP=$(getopt -o 'f:dsuteh' --long 'dec,hex,format:,define,struct,union,type,enum,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
@@ -63,22 +86,7 @@ while true; do
       continue
       ;;
     '-h'|'--help')
-      cat <<EOF
-Usage: $PROGNAME -d|-s SYMBOL HEADER | -h
-        -d, --define  Print final value of preprocessor macro
-        -s, --struct  Print total length of struct
-        -u, --union   Print total length of union
-        -t, --type    Print total length of type
-        -e, --enum    Print total length of enum
-            --dec     Print value in decimal form (default)
-            --hex     Print value in hexadecimal form
-            --type=T  Print value in T form, where T is format string as in
-                      printf(3)
-        -h, --help    Print this help message and exit
-        SYMBOL        Symbol which value is to be examined
-        HEADER        Header where symbol is defined
-EOF
-      exit 0
+      show_help;
       ;;
     '--')
       shift
