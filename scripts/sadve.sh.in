@@ -5,10 +5,10 @@
 set -e
 
 PROGNAME="$0"
-TYPE="d"
+FORMAT="d"
 
 # parse options
-TEMP=$(getopt -o 't:dsh' --long 'dec,hex,type:,define,sizeof,help' -n "$0" -- "$@")
+TEMP=$(getopt -o 'f:dsh' --long 'dec,hex,format:,define,sizeof,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -18,18 +18,18 @@ unset TEMP
 
 while true; do
   case "$1" in
-    '-t'|'--type')
-      TYPE="$2"
+    '-f'|'--format')
+      FORMAT="$2"
       shift 2
       continue
       ;;
     '--hex')
-      TYPE="x"
+      FORMAT="x"
       shift
       continue
       ;;
     '--dec')
-      TYPE="d"
+      FORMAT="d"
       shift
       continue
       ;;
@@ -78,14 +78,14 @@ case $MODE in
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="$SYMBOL"
-    export OUTPUT_TYPE="$TYPE"
+    export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
   sizeof)
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
-    export OUTPUT_TYPE="$TYPE"
+    export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
   *)
