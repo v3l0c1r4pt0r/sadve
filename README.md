@@ -2,6 +2,12 @@
 
 Extract value of C defines directly from command line
 
+## Prerequisites
+
+* cmake - required for both building and using
+* bash - min. version 4.0
+* compiler that can be picked up by cmake (also for using, not only building)
+
 ## Installation
 
 ```shell
