@@ -8,7 +8,7 @@ PROGNAME="$0"
 FORMAT="d"
 
 # parse options
-TEMP=$(getopt -o 'f:dsth' --long 'dec,hex,format:,define,sizeof,type,help' -n "$0" -- "$@")
+TEMP=$(getopt -o 'f:dsth' --long 'dec,hex,format:,define,struct,type,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -38,8 +38,8 @@ while true; do
       shift
       continue
       ;;
-    '-s'|'--sizeof')
-      MODE="sizeof"
+    '-s'|'--struct')
+      MODE="struct"
       shift
       continue
       ;;
@@ -52,7 +52,7 @@ while true; do
       cat <<EOF
 Usage: $PROGNAME -d|-s SYMBOL HEADER | -h
         -d, --define  Print final value of preprocessor macro
-        -s, --sizeof  Print total length of struct
+        -s, --struct  Print total length of struct
         -t, --type    Print total length of type
             --dec     Print value in decimal form (default)
             --hex     Print value in hexadecimal form
@@ -87,7 +87,7 @@ case $MODE in
     export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
-  sizeof)
+  struct)
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="sizeof(struct $SYMBOL)"
