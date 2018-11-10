@@ -27,7 +27,6 @@ EOF
         HEADER        Header where symbol is defined
 EOF
   fi
-  exit 0
 }
 
 # parse options
@@ -87,6 +86,7 @@ while true; do
       ;;
     '-h'|'--help')
       show_help;
+      exit 0
       ;;
     '--')
       shift
