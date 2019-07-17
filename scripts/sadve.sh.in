@@ -35,6 +35,7 @@ EOF
             --hex       Print value in hexadecimal form
             --format=F  Print value in F form, where F is format string as in
                           printf(3)
+            --debug     Debug sadve itself
         -h, --help      Print this help message and exit
         SYMBOL          Symbol which value is to be examined
         HEADER          Header where symbol is defined
@@ -43,7 +44,7 @@ EOF
 }
 
 # parse options
-TEMP=$(getopt -o 'f:dsuteh' --long 'dec,hex,format:,define,struct,union,type,enum,help' -n "$0" -- "$@")
+TEMP=$(getopt -o 'f:dsuteh' --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -94,6 +95,12 @@ while true; do
     '-e'|'--enum')
       MODE="sizeof"
       KEYWORD="enum"
+      shift
+      continue
+      ;;
+    '--debug')
+      echo "Debugging requested by user"
+      set -x
       shift
       continue
       ;;
