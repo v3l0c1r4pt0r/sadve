@@ -111,6 +111,7 @@ while true; do
     '--debug')
       echo "Debugging requested by user"
       set -x
+      VERBOSE="1"
       shift
       continue
       ;;
@@ -166,7 +167,7 @@ cd $BUILD_DIR
 # build
 export CFLAGS="$CFLAGS"
 cmake $SCRIPT_DIR >>$BUILD_DIR/user.log
-make >>$BUILD_DIR/user.log
+make VERBOSE=$VERBOSE >>$BUILD_DIR/user.log
 
 # run program
 make run | awk '/BEGIN/{flag=1;next}/END/{flag=0}flag'
