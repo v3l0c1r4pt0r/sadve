@@ -31,6 +31,7 @@ EOF
         -u, --union     Print total length of union
         -t, --type      Print total length of type
         -e, --enum      Print total length of enum
+        -I DIR          Appends DIR to search path of include files
             --dec       Print value in decimal form (default)
             --hex       Print value in hexadecimal form
             --format=F  Print value in F form, where F is format string as in
@@ -44,7 +45,7 @@ EOF
 }
 
 # parse options
-TEMP=$(getopt -o 'f:dsuteh' --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' -n "$0" -- "$@")
+TEMP=$(getopt -o 'f:dsuteI:h' --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -96,6 +97,12 @@ while true; do
       MODE="sizeof"
       KEYWORD="enum"
       shift
+      continue
+      ;;
+    '-I')
+      DIR="$2"
+      CFLAGS="$CFLAGS -I$DIR"
+      shift 2
       continue
       ;;
     '--debug')
@@ -154,6 +161,7 @@ mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
 # build
+export CFLAGS="$CFLAGS"
 cmake $SCRIPT_DIR >>$BUILD_DIR/user.log
 make >>$BUILD_DIR/user.log
 
