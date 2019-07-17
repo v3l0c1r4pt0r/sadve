@@ -45,7 +45,10 @@ EOF
 }
 
 # parse options
-TEMP=$(getopt -o 'f:dsuteI:h' --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' -n "$0" -- "$@")
+TEMP=$(getopt \
+  -o 'f:dsuteI:h' \
+  --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' \
+  -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
 fi
