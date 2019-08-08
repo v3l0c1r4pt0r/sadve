@@ -22,7 +22,7 @@ FORMAT="d"
 
 function show_help {
   cat <<EOF
-Usage: $PROGNAME [--dec|--hex|--type=T] -d|-s|-u|-t|-e SYMBOL HEADER | -h
+Usage: $PROGNAME [--dec|--hex|--format=T] -d|-s|-u|-t|-e SYMBOL HEADER | -h
 EOF
   if [ "z$1" != "zusage" ]; then
       cat <<EOF
