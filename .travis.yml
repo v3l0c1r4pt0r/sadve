@@ -1,0 +1,10 @@
+language: c
+install:
+  - mkdir -p build
+  - cd build
+  - cmake ..
+  - make
+  - sudo make install
+  - cd -
+script:
+  - bash test/system.sh

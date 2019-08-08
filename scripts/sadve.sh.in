@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # SADVE - extract #define value from CLI
 
 # Copyright (C) 2018 Kamil Lorenc
@@ -166,6 +166,11 @@ case $MODE in
     # split SYMBOL into STRUCT and FIELD
     STRUCT="${dollar}{SYMBOL%.*}"
     FIELD="${dollar}{SYMBOL#*.}"
+
+    # result is long
+    if [ "z$FORMAT" = "zd" ]; then
+      FORMAT="ld"
+    fi
 
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"

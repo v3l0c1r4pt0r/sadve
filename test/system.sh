@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Vectors for system tests
 
 # Copyright (C) 2018 Kamil Lorenc
@@ -28,8 +28,8 @@ VECTORS['sadve -t uint32_t stdint.h']='4'
 VECTORS['sadve --type uint32_t stdint.h']='4'
 VECTORS['sadve -u i2c_smbus_data linux/i2c.h']='34'
 VECTORS['sadve --union i2c_smbus_data linux/i2c.h']='34'
-VECTORS['sadve -e net_device_flags linux/if.h']='4'
-VECTORS['sadve --enum net_device_flags linux/if.h']='4'
+VECTORS['sadve -e bpf_cmd linux/bpf.h']='4'
+VECTORS['sadve --enum bpf_cmd linux/bpf.h']='4'
 VECTORS['sadve int stdint.h']=''
 VECTORS['sadve int']=''
 VECTORS['sadve --hex -d WDIOC_GETSTATUS linux/watchdog.h']='80045701'
@@ -37,6 +37,7 @@ VECTORS['sadve --dec -d WDIOC_GETSTATUS linux/watchdog.h']='-2147199231'
 VECTORS['sadve --format=o -d WDIOC_GETSTATUS linux/watchdog.h']='20001053401'
 VECTORS['sadve -I /usr/lib/modules/'`uname -r`'/build/include/uapi -d EBADF asm-generic/errno-base.h']='9'
 VECTORS['sadve -o gz_header.os zlib.h']='20'
+VECTORS['sadve --offset gz_header.os zlib.h']='20'
 VECTORS['sadve -so gz_header_s.os zlib.h']='20'
 VECTORS['sadve -os gz_header_s.os zlib.h']='20'
 
