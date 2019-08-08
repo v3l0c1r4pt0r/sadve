@@ -22,7 +22,9 @@ FORMAT="d"
 
 function show_help {
   cat <<EOF
-Usage: $PROGNAME [--dec|--hex|--format=T] -d|-s|-u|-t|-e SYMBOL HEADER | -h
+Usage: $PROGNAME [--dec|--hex|--format=F] -d|-s|-u|-t|-e SYMBOL HEADER
+       $PROGNAME [--dec|--hex|--format=F] -o STRUCT.FIELD HEADER
+       $PROGNAME -h
 EOF
   if [ "z$1" != "zusage" ]; then
       cat <<EOF
@@ -31,6 +33,7 @@ EOF
         -u, --union     Print total length of union
         -t, --type      Print total length of type
         -e, --enum      Print total length of enum
+        -o, --offset    Print offset of field in structure
         -I DIR          Appends DIR to search path of include files
             --dec       Print value in decimal form (default)
             --hex       Print value in hexadecimal form
@@ -46,8 +49,8 @@ EOF
 
 # parse options
 TEMP=$(getopt \
-  -o 'f:dsuteI:h' \
-  --long 'dec,hex,format:,define,struct,union,type,enum,debug,help' \
+  -o 'f:dsuteoI:h' \
+  --long 'dec,hex,format:,define,struct,union,type,enum,offset,debug,help' \
   -n "$0" -- "$@")
 if [ $? -ne 0 ]; then
   exit 1
@@ -99,6 +102,11 @@ while true; do
     '-e'|'--enum')
       IMPL_MODE="sizeof"
       KEYWORD="enum"
+      shift
+      continue
+      ;;
+    '-o'|'--offset')
+      MODE="offsetof"
       shift
       continue
       ;;
