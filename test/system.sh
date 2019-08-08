@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Vectors for system tests
 
 # Copyright (C) 2018 Kamil Lorenc
