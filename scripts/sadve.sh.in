@@ -79,13 +79,13 @@ while true; do
       continue
       ;;
     '-s'|'--struct')
-      MODE="sizeof"
+      IMPL_MODE="sizeof"
       KEYWORD="struct"
       shift
       continue
       ;;
     '-u'|'--union')
-      MODE="sizeof"
+      IMPL_MODE="sizeof"
       KEYWORD="union"
       shift
       continue
@@ -97,7 +97,7 @@ while true; do
       continue
       ;;
     '-e'|'--enum')
-      MODE="sizeof"
+      IMPL_MODE="sizeof"
       KEYWORD="enum"
       shift
       continue
@@ -132,6 +132,11 @@ done
 
 INCLUDE="$2"
 SYMBOL="$1"
+
+# in case of implicit mode set by one of struct, enum, union
+if [ -z "$MODE" -a -n "$IMPL_MODE" ]; then
+  MODE="$IMPL_MODE"
+fi
 
 # prepare vars to fill template
 case $MODE in
