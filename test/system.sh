@@ -37,6 +37,7 @@ VECTORS['sadve --dec -d WDIOC_GETSTATUS linux/watchdog.h']='-2147199231'
 VECTORS['sadve --format=o -d WDIOC_GETSTATUS linux/watchdog.h']='20001053401'
 VECTORS['sadve -I /usr/lib/modules/'`uname -r`'/build/include/uapi -d EBADF asm-generic/errno-base.h']='9'
 VECTORS['sadve -o gz_header.os zlib.h']='20'
+VECTORS['sadve --offset gz_header.os zlib.h']='20'
 VECTORS['sadve -so gz_header_s.os zlib.h']='20'
 VECTORS['sadve -os gz_header_s.os zlib.h']='20'
 
