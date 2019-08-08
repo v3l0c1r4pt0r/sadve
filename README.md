@@ -33,12 +33,15 @@ sadve -s sockaddr sys/socket.h
 
 Full help text:
 ```
-Usage: /usr/local/bin/sadve [--dec|--hex|--type=T] -d|-s|-u|-t|-e SYMBOL HEADER | -h
+Usage: /usr/local/bin/sadve [--dec|--hex|--format=F] -d|-s|-u|-t|-e SYMBOL HEADER
+       /usr/local/bin/sadve [--dec|--hex|--format=F] -o STRUCT.FIELD HEADER
+       /usr/local/bin/sadve -h
         -d, --define    Print final value of preprocessor macro
         -s, --struct    Print total length of struct
         -u, --union     Print total length of union
         -t, --type      Print total length of type
         -e, --enum      Print total length of enum
+        -o, --offset    Print offset of field in structure
         -I DIR          Appends DIR to search path of include files
             --dec       Print value in decimal form (default)
             --hex       Print value in hexadecimal form
