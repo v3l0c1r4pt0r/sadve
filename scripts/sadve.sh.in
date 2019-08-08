@@ -167,6 +167,11 @@ case $MODE in
     STRUCT="${dollar}{SYMBOL%.*}"
     FIELD="${dollar}{SYMBOL#*.}"
 
+    # result is long
+    if [ "z$FORMAT" = "zd" ]; then
+      FORMAT="ld"
+    fi
+
     export OUTPUT_INCLUDE="$INCLUDE"
     export OUTPUT_SYMBOL="$SYMBOL"
     export OUTPUT_COMMAND="offsetof($KEYWORD $STRUCT, $FIELD)"
