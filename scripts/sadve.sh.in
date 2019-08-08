@@ -162,6 +162,17 @@ case $MODE in
     export OUTPUT_TYPE="$FORMAT"
     OUTPUT_MODE="simple"
     ;;
+  offsetof)
+    # split SYMBOL into STRUCT and FIELD
+    STRUCT="${dollar}{SYMBOL%.*}"
+    FIELD="${dollar}{SYMBOL#*.}"
+
+    export OUTPUT_INCLUDE="$INCLUDE"
+    export OUTPUT_SYMBOL="$SYMBOL"
+    export OUTPUT_COMMAND="offsetof($KEYWORD $STRUCT, $FIELD)"
+    export OUTPUT_TYPE="$FORMAT"
+    OUTPUT_MODE="simple"
+    ;;
   *)
     echo 'No mode was chosen. Use one of -dsute.'
     show_help "usage";
