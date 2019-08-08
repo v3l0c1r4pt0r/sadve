@@ -35,6 +35,7 @@ VECTORS['sadve int']=''
 VECTORS['sadve --hex -d WDIOC_GETSTATUS linux/watchdog.h']='80045701'
 VECTORS['sadve --dec -d WDIOC_GETSTATUS linux/watchdog.h']='-2147199231'
 VECTORS['sadve --format=o -d WDIOC_GETSTATUS linux/watchdog.h']='20001053401'
+VECTORS['sadve -I /usr/lib/modules/'`uname -r`'/build/include/uapi -d EBADF asm-generic/errno-base.h']='9'
 
 # evaluate
 for COMMAND in "${!VECTORS[@]}"; do
